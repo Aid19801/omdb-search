@@ -8,40 +8,25 @@ class HomePage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      title: '',
-      results: {},
-      resultTitles: []
+      movies: []
     };
-    this.onTitleChange = this.onTitleChange.bind(this);
-    this.onClickSubmit = this.onClickSubmit.bind(this);
-    this.titleRow = this.titleRow.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  onTitleChange(event) {
-    let searchTerm = event.target.value;
-    fetch('http://www.omdbapi.com/?s=' + searchTerm)
-      .then((x) => x.json())
-      .then((y) => this.setState({
-        results: y.Search,
-        resultTitles: y.Search.map((z) => z.Title)
-      }))
-      console.log('test:  ', this.state.resultTitles);
+    onChange(event) {
+      let searchTerm = event.target.value;
+      fetch('http://www.omdbapi.com/?s=' + searchTerm)
+        .then((response) => response.json()
+          .then((responseJSON) => this.setState({
+              movies: responseJSON.Search
+            })));
+            console.log(this.state.movies);
     }
-// loop through array of objects
-// return object key value for each title
-
-  onClickSubmit() {
-    this.props.dispatch(searchActions.searchMovies(this.state.searchTerm));
-  }
-
-  titleRow(searchTerm, index) {
-    let results = this.state.resultTitles;
-    for (var i = 0; i < results.length; i++ ) {
-      return <div key={index}>{results[i].title}</div>;
-    }
-  }
 
   render() {
+
+    let movies = this.state.movies;
+
     return (
       <div className="jumbotron">
         <h1>OMDB</h1>
@@ -49,8 +34,8 @@ class HomePage extends React.Component {
 
         <input
           type="text"
-          onChange={this.onTitleChange}
-          style={{ width: '80%', height: '25%' }}
+          onChange={this.onChange}
+          style={{ width: '80%' }}
         />
         <input
           type="submit"
@@ -59,22 +44,20 @@ class HomePage extends React.Component {
         />
 
         <h2>Suggestions</h2>
-        <h3>{this.titleRow}</h3>
+        <div>Suggestions will go here</div>
+        <ul>
+          {this.state.movies.map((x) => {
+            return <li key={x}>{x.Title}</li>;
+          })}
+        </ul>
       </div>
     );
   }
 }
 
 HomePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  titles: PropTypes.array.isRequired
-
+  onChange: React.PropTypes.func.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  return {
-    titles: state.titles
-  };
-}
 
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;
