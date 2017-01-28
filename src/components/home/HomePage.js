@@ -8,9 +8,9 @@ class HomePage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      searchTerm: {
-        title: ''
-      }
+      title: '',
+      results: {},
+      resultTitles: []
     };
     this.onTitleChange = this.onTitleChange.bind(this);
     this.onClickSubmit = this.onClickSubmit.bind(this);
@@ -18,23 +18,27 @@ class HomePage extends React.Component {
   }
 
   onTitleChange(event) {
-    let returnedData;
-    const searchTerm = this.state.searchTerm;
-    searchTerm.title = event.target.value;
-    fetch('http://www.omdbapi.com/?s=' + this.state.searchTerm.title)
+    let searchTerm = event.target.value;
+    fetch('http://www.omdbapi.com/?s=' + searchTerm)
       .then((x) => x.json())
-      .then((y) => console.log(y.Search));
-    this.setState({
-      searchTerm: searchTerm
-    });
-  }
+      .then((y) => this.setState({
+        results: y.Search,
+        resultTitles: y.Search.map((z) => z.Title)
+      }))
+      console.log('test:  ', this.state.resultTitles);
+    }
+// loop through array of objects
+// return object key value for each title
 
   onClickSubmit() {
     this.props.dispatch(searchActions.searchMovies(this.state.searchTerm));
   }
 
   titleRow(searchTerm, index) {
-    return <div key={index}>{searchTerm.title}</div>;
+    let results = this.state.resultTitles;
+    for (var i = 0; i < results.length; i++ ) {
+      return <div key={index}>{results[i].title}</div>;
+    }
   }
 
   render() {
@@ -55,7 +59,7 @@ class HomePage extends React.Component {
         />
 
         <h2>Suggestions</h2>
-        {this.props.titles.map(this.titleRow)}
+        <h3>{this.titleRow}</h3>
       </div>
     );
   }
