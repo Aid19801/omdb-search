@@ -4,7 +4,9 @@ basic redux and react web app that allows user to search for movie titles off th
 To install:
 
 git clone
+
 cd omdb-search
+
 npm install
 
 npm start -s
