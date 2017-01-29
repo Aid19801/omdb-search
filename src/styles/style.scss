@@ -1,21 +1,30 @@
 $backgroundColor: #EE8100;
-$resultsBackground: #8C7AAE;
-
+$resultsBackground: #49464D;
+$jumbotronBackground: url('http://4k.com/wp-content/uploads/2014/05/blackmagicproductioncamera4k_1000.jpg');
+$backgroundImage: url('https://www.xmple.com/wallpaper/linear-grey-gradient-orange-1920x1080-c2-ad7555-808080-a-90-f-14.svg');
+$paragraphColor: #9A999C;
 
 body {
-  background-color: $backgroundColor !important;
+  background-image: $backgroundImage !important;
   border: 2px 2px solid black;
 }
 
-.jumbotron {
+div .container-fluid {
+  padding-top: 3vh;
+}
+
+div .jumbotron {
   border: 2px solid grey;
+  padding-top: 15px;
+  background-image: $jumbotronBackground;
 }
 
 .welcomeNote {
   text-align: center;
-  color: #685206;
+  color: $paragraphColor;
+  text-shadow: 1px 1px black;
   font-family: 'Helvetica Neue', sans-serif;
-  font-size: 14px;
+  font-size: 6vh;
   line-height: 24px;
   margin: 0 0 24px;
   text-justify: inter-word;
@@ -60,10 +69,9 @@ div .mainTitle h1 {
 div .resultsSection {
   border: 1px solid black;
   background-color: $resultsBackground;
+  opacity: 0.9;
   color: #111;
   font-family: 'Open Sans', sans-serif;
-  font-size: 30px;
-  font-weight: 100;
   line-height: 32px;
   margin: 0 0 72px;
   text-align: center;
@@ -74,7 +82,18 @@ div .resultsSection ul {
   padding-left: 0;
   padding-bottom: 0;
   margin-bottom: 0;
+}
+
+div .resultsSection ul li {
   transition: width 2s, height 4s;
+  opacity: 0;
+  color: white;
+  font-family: 'open sans',arial,sans-serif;
+  font-weight: 100;
+}
+
+div .resultsSection ul li {
+  opacity: 1;
 }
 
 div .resultsSection ul li:hover{

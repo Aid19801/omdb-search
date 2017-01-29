@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 class Results extends React.Component {
   render() {
+    console.log(this.props)
     return (
       <div className="resultsList">
         <ul>
@@ -10,7 +11,8 @@ class Results extends React.Component {
                     key={x.imdbID}
                     className="resultRow"
                     style={{listStyleType: 'none'}}
-                  >{x.Title}</li>)
+                  >{x.Title}</li>
+                )
         })}
         </ul>
       </div>
