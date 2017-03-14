@@ -2,12 +2,8 @@ import React, {PropTypes} from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as searchActions from '../../actions/searchActions';
-import style from '../../styles/style.scss';
+// import style from '../../styles/style.scss';
 import Results from '../results/Results';
-
-// main Homepage area.
-// contains all the logic - was going to use Redux but a) have been taught
-// to keep Redux to min if one-page app and b) not strong enough with it yet.
 
 class HomePage extends React.Component {
 
@@ -21,7 +17,7 @@ class HomePage extends React.Component {
 
     onChange(event) {
       let searchTerm = event.target.value;
-      fetch('http://www.omdbapi.com/?s=' + searchTerm)
+      fetch(`http://www.omdbapi.com/?s=${searchTerm}`)
         .then((response) => response.json()
           .then((responseJSON) => this.setState({
               movies: responseJSON.Search
@@ -31,7 +27,7 @@ class HomePage extends React.Component {
 
   render() {
 
-    let movies = this.state.movies;
+    let movies = this.state.movies || [];
 
     return (
       <div className="jumbotron">
